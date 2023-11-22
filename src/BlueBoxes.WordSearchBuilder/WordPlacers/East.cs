@@ -1,0 +1,22 @@
+﻿using BlueBoxes.WordSearchBuilder.Helpers;
+using BlueBoxes.WordSearchBuilder.Models;
+
+namespace BlueBoxes.WordSearchBuilder.WordPlacers
+{
+    public class East : WordPlacer
+    {
+        public override PlacedWord TryPlaceWord(string word, char[][] grid)
+        {
+            if (word.Length > grid.Width())
+                return PlacedWord.Empty;
+
+            var xRange = Enumerable.Range(0, grid.Width() - word.Length + 1).ToArray();
+            var yRange = Enumerable.Range(0, grid.Width()).ToArray();
+
+            return FindWordLocation(xRange, yRange, word, grid);
+        }
+
+        public override Direction Direction { get; } = Direction.East;
+
+    }
+}

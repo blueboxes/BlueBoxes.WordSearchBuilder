@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueBoxes.WordSearchBuilder", "BlueBoxes.WordSearchBuilder\BlueBoxes.WordSearchBuilder.csproj", "{EF309A6C-3076-4043-9477-EDE3D376ED18}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueBoxes.WordSearchBuilder.Tests", "BlueBoxes.WordSearchBuilder.Tests\BlueBoxes.WordSearchBuilder.Tests.csproj", "{7AD6AB42-236D-40AA-986E-56293E18C92D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF309A6C-3076-4043-9477-EDE3D376ED18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF309A6C-3076-4043-9477-EDE3D376ED18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF309A6C-3076-4043-9477-EDE3D376ED18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF309A6C-3076-4043-9477-EDE3D376ED18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AD6AB42-236D-40AA-986E-56293E18C92D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AD6AB42-236D-40AA-986E-56293E18C92D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AD6AB42-236D-40AA-986E-56293E18C92D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AD6AB42-236D-40AA-986E-56293E18C92D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CEF88C25-3A95-4886-BED9-CE4919FFC266}
+	EndGlobalSection
+EndGlobal
