@@ -2,9 +2,9 @@
 
 namespace BlueBoxes.WordSearchBuilder.Repositories
 {
-    public interface IWordSearchRepository
+    public interface IWordSearchFileRepository
     {
-        Task<string> SaveSetAsync(WordSearchSet puzzles);
-        Task<WordSearchSet> LoadSetAsync(string id);
+        Task SavePuzzleAsync(PuzzleDefinition puzzle, string filePath);
+        Task<PuzzleDefinition> LoadPuzzleAsync(string filePath);
     }
 }

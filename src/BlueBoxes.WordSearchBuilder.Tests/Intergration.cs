@@ -14,15 +14,13 @@ namespace BlueBoxes.WordSearchBuilder.Tests
             ws.AddWords("word1", "word2", "word3");
 
             var pd = ws.Build();
-            var set = new WordSearchSet();
-            set.Puzzles.Add(pd);
-
+             
             var repo = new LocalFileRepository();
-            var puzzleId = await repo.SaveSetAsync(set);
+            var fileName = Path.GetTempFileName();
+            await repo.SavePuzzleAsync(pd, fileName);
+            var loadedPuzzleSet = await repo.LoadPuzzleAsync(fileName);
 
-            var loadedPuzzleSet = await repo.LoadSetAsync(puzzleId);
-
-            loadedPuzzleSet.Should().BeEquivalentTo(set);
+            loadedPuzzleSet.Should().BeEquivalentTo(pd);
         }
 
         [Test]

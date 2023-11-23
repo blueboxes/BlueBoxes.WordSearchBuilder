@@ -28,6 +28,7 @@
     <PackageIcon>packageIcon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>MyTag1;MyTag2</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
