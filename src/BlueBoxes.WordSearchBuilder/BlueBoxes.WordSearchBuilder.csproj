@@ -19,11 +19,14 @@
   </ItemGroup>
 
   <PropertyGroup>
+    <PackageId>BlueBoxes.WordSearchBuilder</PackageId>
+    <Version>1.0.0-Preview</Version>
     <Authors>John Kilmister</Authors>
     <PackageIcon>packageIcon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>MyTag1;MyTag2</PackageTags>
+    <ProjectUrl>https://github.com/blueboxes/BlueBoxes.WordSearchBuilder</ProjectUrl>
+    <PackageTags>WordSearch;Puzzle;iPuz;PuzzleSolver;PuzzleBuilder;PuzzleExport</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
