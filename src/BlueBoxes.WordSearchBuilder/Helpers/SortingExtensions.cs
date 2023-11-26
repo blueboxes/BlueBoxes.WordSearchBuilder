@@ -10,7 +10,7 @@ static class SortingExtensions
     }
 
     /// <summary>
-    /// Sort words that are most likly to allow other words to be placed
+    /// Sort words that are most likely to allow other words to be placed
     /// Longer words score more as harder to place and so do words with more common letters
     /// </summary>
     /// <param name="items"></param>
