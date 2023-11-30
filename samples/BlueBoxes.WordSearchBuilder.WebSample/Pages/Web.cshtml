@@ -1,0 +1,257 @@
+﻿@page
+@using WordSearchEngine.Models;
+@using WordSearchEngine.WordPlacers;
+@model WebModel
+
+@{
+    if (Model is null)
+        throw new ArgumentNullException(nameof(Model));
+
+    int GetHeight(Direction direction, int cellSize, int wordLength)
+    {
+        if (direction == Direction.East || direction == Direction.West)
+            return cellSize - cellSize / 4;
+
+        if (direction == Direction.SouthWest ||
+            direction == Direction.NorthWest ||
+            direction == Direction.SouthEast ||
+            direction == Direction.NorthEast)
+        {
+            double size = (cellSize * wordLength);
+            double diagonalLength = Math.Sqrt(Math.Pow(size, 2) + Math.Pow(size, 2));
+            return (int)(diagonalLength - cellSize / 2);
+        }
+
+        return cellSize * wordLength;
+    }
+
+    int GetWidth(Direction direction, int cellSize, int wordLength)
+    {
+        if (direction == Direction.East || direction == Direction.West)
+            return cellSize * wordLength;
+
+        return cellSize - cellSize / 4;
+    }
+}
+
+<style>
+    .grid-container {
+        display: grid;
+        <!--grid-template-columns: repeat(@Model.PuzzleLayout.GridSize, 1fr);-->
+        grid-auto-rows: minmax(0, 1fr);
+        position: relative;
+    }
+
+    .grid-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: @(Model.PuzzleLayout.PuzzleFontSize)px;
+        height: @(Model.PuzzleLayout.PuzzleCellSize)px;
+        width: @(Model.PuzzleLayout.PuzzleCellSize)px;
+    }
+
+    h2 {
+        font-size: @(Model.PuzzleLayout.TitleSize)px;
+        font-family: @(Html.Raw(Model.PuzzleLayout.FontFamily));
+        color: #282828;
+        padding-bottom:30px;
+        text-transform: uppercase;
+    }
+
+    .wordsearch {
+        border: 2px solid lightgray;
+        border-radius: 15px;
+        display: inline-block;
+        box-sizing: border-box;
+    }
+
+    .answer-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 310px);
+        grid-auto-rows: minmax(0, 1fr);
+        position: relative;
+    }
+
+    .answer-item {
+        padding: 0 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        page-break-inside: avoid;
+        padding-bottom:20px;
+    }
+
+    .answer-item .grid-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: @(Model.PuzzleLayout.SolutionFontSize)px;
+        height: @(Model.PuzzleLayout.SolutionCellSize)px;
+        width: @(Model.PuzzleLayout.SolutionCellSize)px;
+    }
+
+    .ring {
+        position: absolute;
+        box-shadow: inset 0 0 0 2px red;
+        border-radius: @(Model.PuzzleLayout.SolutionCellSize)px;
+    }
+
+    .ring-east {
+        transform: translateX(@(Model.PuzzleLayout.SolutionCellSize / 8)px);
+    }
+
+    .ring-west {
+        transform: translateY(@(Model.PuzzleLayout.SolutionCellSize / 8)px) rotate(180deg);
+        transform-origin: @(Model.PuzzleLayout.SolutionCellSize / 2)px @(Model.PuzzleLayout.SolutionCellSize / 2)px;
+    }
+
+    .ring-south {
+        transform: translateY(@(Model.PuzzleLayout.SolutionCellSize / 8)px);
+    }
+
+    .ring-north {
+        transform: translateY(@(Model.PuzzleLayout.SolutionCellSize / 8)px) rotate(180deg);
+        transform-origin: @(Model.PuzzleLayout.SolutionCellSize / 2)px @(Model.PuzzleLayout.SolutionCellSize / 2)px;
+    }
+
+    .ring-southeast {
+        transform-origin: @(Model.PuzzleLayout.SolutionCellSize / 2)px @(Model.PuzzleLayout.SolutionCellSize / 2)px;
+        transform: rotate(-45deg) translateX(@(Model.PuzzleLayout.SolutionCellSize / 8)px);
+    }
+
+    .ring-northwest {
+        transform-origin: @(Model.PuzzleLayout.SolutionCellSize / 2)px @(Model.PuzzleLayout.SolutionCellSize / 2)px;
+        transform: rotate(-225deg) translateX(@(Model.PuzzleLayout.SolutionCellSize / 8)px);
+    }
+
+    .ring-northeast {
+        transform-origin: @(Model.PuzzleLayout.SolutionCellSize / 2)px @(Model.PuzzleLayout.SolutionCellSize / 2)px;
+        transform: rotate(-135deg) translateX(@(Model.PuzzleLayout.SolutionCellSize / 8)px);
+    }
+
+    .ring-southwest {
+        transform-origin: @(Model.PuzzleLayout.SolutionCellSize / 2)px @(Model.PuzzleLayout.SolutionCellSize / 2)px;
+        transform: rotate(-315deg) translateX(@(Model.PuzzleLayout.SolutionCellSize / 8)px);
+    }
+
+    .words-container {
+        max-width: @(Model.PuzzleLayout.GridSize * Model.PuzzleLayout.PuzzleCellSize)px;
+        margin: auto;
+        padding-top: 40px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: minmax(0, 1fr);
+        position: relative;
+        font-size: @(Model.PuzzleLayout.PuzzleFontSize)px;
+    }
+
+    .words-item {
+        display: flex;
+        justify-content: left;
+        align-items: flex-start;
+        padding-bottom: 5px;
+    }
+
+    html {
+        height: 100%
+    }
+
+    body {
+        font-family: @Html.Raw(Model.PuzzleLayout.FontFamily);
+        text-align: center;
+        height: 100%;
+    }
+
+    @@media print {
+        .break {
+            page-break-after: always;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 10px;
+        }
+
+        form {
+            display: none;
+        }
+    }
+</style>
+
+@if (Model.View == WebModel.Display.Puzzles || Model.View == WebModel.Display.All)
+{
+
+@foreach (var puzzle in Model.Puzzles)
+{
+
+    <h2>@puzzle.Title</h2>
+
+    <div class="wordsearch">
+
+            <div class="grid-container" style="grid-template-columns: repeat(@puzzle.Dimensions.Width, 1fr);">
+            @{       
+                for (var row = 0; row < puzzle.Dimensions.Height; row++)
+                {
+                for (var col = 0; col < puzzle.Dimensions.Width; col++)
+                    {
+                            <div class="grid-item" data-id="@col,@row">@(puzzle.Puzzle[col][row])</div>
+                    }
+                }
+            }
+        </div>
+    </div>
+
+        <div class="words-container" style="max-width: @(puzzle.Dimensions.Width * Model?.PuzzleLayout.PuzzleCellSize)px;">
+        @foreach (var word in puzzle.Solution ?? new List<PlacedWord>())
+        {
+            <div class="words-item">⬜ @word.Word</div>
+        }
+    </div>
+    <footer></footer>
+    <div class="break"></div>
+}
+
+}
+
+@if (Model.View == WebModel.Display.Solutions || Model.View == WebModel.Display.All){
+
+<h2>Solutions</h2>
+<div class="answer-container">
+    @foreach (var puzzle in Model.Puzzles)
+    {
+        <div class="answer-item">
+
+            <div>
+                <h4>@puzzle.Title</h4>
+                <div class="wordsearch">
+
+                        <div class="grid-container" style="grid-template-columns: repeat(@puzzle.Dimensions.Width, 1fr);">
+
+                        @foreach (var word in puzzle.Solution ?? new List<PlacedWord>())
+                        {
+                                <div class="ring ring-@word.Direction.ToString().ToLower()" data-word="@word" style="top:@(word.StartCell.Row * Model?.PuzzleLayout.SolutionCellSize)px;
+                                    left:@(word.StartCell.Col * Model?.PuzzleLayout.SolutionCellSize)px;
+                                    height:@(GetHeight(word.Direction, Model?.PuzzleLayout.SolutionCellSize??1, word.GridWordLength))px;
+                                    width:@(GetWidth(word.Direction,  Model?.PuzzleLayout.SolutionCellSize??1, word.GridWordLength))px"></div>
+                        }
+
+                        @{
+                                for (var row = 0; row < puzzle.Dimensions.Height; row++)
+                                {
+                                    for (var col = 0; col < puzzle.Dimensions.Width; col++)
+                                    {
+                                        <div class="grid-item" data-id="@col,@row">@(puzzle.Puzzle[col][row])</div>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+}
