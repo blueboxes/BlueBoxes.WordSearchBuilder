@@ -19,14 +19,16 @@ public class WordSearchBuilder
     public List<PlacedWord> Solution { get; } = new List<PlacedWord>();
     public Difficulty DifficultyLevel { get; }
     public string? Notes { get; set; }
-    public string Title { get; private set; }
+    public string Title { get; private set; } = "";
 
 
-    //Default versions that can be replaced
-    public List<WordPlacer> WordPlacers { get; set; }
+    private List<WordPlacer> WordPlacers { get; set; }
 
     public ISpaceFiller SpaceFiller { get; private set; } = new DefaultEnglishSpaceFiller();
 
+    /// <summary>
+    /// Puzzle Difficulty Levels
+    /// </summary>
     public enum Difficulty
     {
         Easy,
@@ -34,25 +36,56 @@ public class WordSearchBuilder
         Hard
     }
 
-    public WordSearchBuilder(int width, int height, string title = "", Difficulty difficulty = Difficulty.Easy)
+    /// <summary>
+    /// Create a new WordSearchBuilder with a default set of Medium Difficulty WordPlacers
+    /// </summary>
+    /// <param name="width">Grid Width</param>
+    /// <param name="height">Grid Height</param>
+    public WordSearchBuilder(int width, int height)
     {
         Grid = GridExtensions.Initialize(width, height, WordPlacer.NullChar);
-        Title = title;
-        DifficultyLevel = difficulty;
-        WordPlacers = PlacerSets.GetSet(difficulty);
+        WordPlacers = PlacerSets.GetSet(Difficulty.Medium);
     }
+
+    /// <summary>
+    /// Sets the difficulty of the WordSearchBuilder
+    /// </summary>
+    /// <param name="difficulty">Difficulty Level</param>
+    /// <returns>Current WordSearchBuilder</returns>
+    public WordSearchBuilder SetDifficulty(Difficulty difficulty)
+    {
+        WordPlacers = PlacerSets.GetSet(difficulty);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the SpaceFiller of the WordSearchBuilder
+    /// </summary>
+    /// <param name="spaceFiller">SpaceFiller</param>
+    /// <returns>Current WordSearchBuilder</returns>
 
     public WordSearchBuilder SetSpaceFiller(ISpaceFiller spaceFiller)
     {
         SpaceFiller = spaceFiller;
         return this;
     }
+
+    /// <summary>
+    /// Sets a custom set of WordPlacers
+    /// </summary>
+    /// <param name="wordPlacers">Set of Word Placers to use</param>
+    /// <returns>Current WordSearchBuilder</returns>
     public WordSearchBuilder SetWordPlacers(IEnumerable<WordPlacer> wordPlacers)
     {
         WordPlacers.AddRange(wordPlacers);
         return this;
     }
 
+    /// <summary>
+    /// Adds a set of words to the WordSearchBuilder grid. Words are sorted by complexity before being added.
+    /// </summary>
+    /// <param name="words">List of words to add</param>
+    /// <returns>Current WordSearchBuilder</returns>
     public WordSearchBuilder AddWords(params string[] words)
     {
         foreach (var currentWord in words.SortByComplexity())
@@ -76,7 +109,7 @@ public class WordSearchBuilder
     /// <summary>
     /// Based on iPuz format create a PuzzleDefinition
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Complete PuzzleDefinition in iPuz format</returns>
     public PuzzleDefinition Build()
     {
         SpaceFiller.FillSpacesInGrid(Grid);
