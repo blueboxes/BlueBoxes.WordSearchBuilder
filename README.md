@@ -2,13 +2,12 @@
 
 This package is a .Net 8 library for creating, solving and exporting word searches in json [iPuz format](https://ipuz.readthedocs.io/en/latest/reading.html#validation-for-wordsearch-puzzles).
 
-Words can be placed at random horizontally, vertically or diagonally, forwards or backwards. The word search can be any size, and the words to be found can be of any length.
+Words are be placed at random horizontally, vertically or diagonally both forwards and backwards. The wordsearch can be any size, and the words to be found can be of any length.
 
 Snaking Word Search puzzles where the words can change direction are not supported directly however could easily be added.
 
 ## Getting started
-
-The builder allows you to add words to a grid, upon calling `Build` it fills the spaces with random letters.
+The wordsearch builder allows adding words to the wordsearch grid, upon calling `Build` it fills the spaces with random letters.
 
 ```csharp
 var builder = new WordSearchBuilder(10, 10)
