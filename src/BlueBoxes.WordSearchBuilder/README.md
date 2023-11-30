@@ -36,4 +36,4 @@ foreach(var word in puzzleDef.Solution)
 ```
 
 # Additional Documentation
-More examples of usage and sample projects can be found on the [Prjects GitHub](https://github.com/blueboxes/BlueBoxes.WordSearchBuilder/blob/main/README.md)
+More examples of usage and sample projects can be found on the [Projects GitHub](https://github.com/blueboxes/BlueBoxes.WordSearchBuilder/blob/main/README.md)

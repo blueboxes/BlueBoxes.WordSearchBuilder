@@ -11,9 +11,9 @@ Snaking Word Search puzzles where the words can change direction are not support
 The builder allows you to add words to a grid, upon calling `Build` it fills the spaces with random letters.
 
 ```csharp
-var builder = new WordSearchBuilder(10, 10);    
-builder.AddWords("Apple", "Orange", "Grape");
-var puzzleDef = builder.Build();
+var builder = new WordSearchBuilder(10, 10)
+    .AddWords("Apple", "Orange", "Grape")
+    .Build();
 ```
 
 To render the results you can loop over the grid.
@@ -41,27 +41,35 @@ foreach(var word in puzzleDef.Solution)
 
 ### Prerequisites
 
-This package requires the following dependencies:
-
-- .net 8.0
+This package requires the only .net 8.0 and does not use any other dependencies.
 
 ## Usage
 
 ### Difficulty level
-By default difficulty level it is set to Easy mode. The difficulty level can be set in the constructor or through the property `DifficultyLevel`.
+By default difficulty level it is set to Medium mode. The difficulty level can be set in the through the method `SetDifficulty(Difficulty.Easy)`.
 
 The are 3 levels:
 
-1. `DifficultyLevel.Easy` - This places words left to right and top to bottom with a few diagrams.
-2. `DifficultyLevel.Medium` - Sets an equal amount of left to right, top to bottom and diagonal words with a few reversed.
-3. `DifficultyLevel.Hard` - Gives an equal waiting to all directions of words.
+1. `Difficulty.Easy` - This places words left to right and top to bottom with a few diagrams.
+2. `Difficulty.Medium` - Sets an equal amount of left to right, top to bottom and diagonal words with a few reversed.
+3. `Difficulty.Hard` - Gives an equal waiting to all directions of words.
 
 This sets the group of word placers that are randomly picked from when placing words. You can set your own to override this using the `SetWordPlacers` method.
 
-### Removing Bad Words
-Example Coming Soon...
-
 ### Solving a word search
+We can use the library to solve a puzzle. This can be used to remove unwanted words or to check if a word is in the puzzle.
+
+```csharp
+var puzzleDef = new WordSearchBuilder(10, 10)
+            .AddWords("word1", "word2", "word3")
+            .Build();
+
+var solver = new StandardWordSearchSolver();
+var result = solver.SeekWord(puzzleDef.Puzzle, "word");
+
+```
+
+### Removing Bad Words
 Example Coming Soon...
 
 ### Saving and Loading a word search
