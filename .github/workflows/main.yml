@@ -30,7 +30,7 @@ jobs:
         run: dotnet build src --configuration Release
         
       - name: Run tests
-        run: dotnet test src --no-build --verbosity normal --collect:"XPlat Code Coverage" --logger trx --results-directory coverage -v n
+        run: dotnet test src --no-build --verbosity debug --collect:"XPlat Code Coverage" --logger trx --results-directory coverage
 
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.3.0
