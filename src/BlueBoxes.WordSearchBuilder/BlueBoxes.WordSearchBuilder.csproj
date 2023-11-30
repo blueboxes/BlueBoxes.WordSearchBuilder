@@ -20,7 +20,7 @@
 
   <PropertyGroup>
     <PackageId>BlueBoxes.WordSearchBuilder</PackageId>
-    <Version>1.0.0-Preview</Version>
+    <Version>1.0.0-Preview3</Version>
     <Authors>John Kilmister</Authors>
     <PackageIcon>packageIcon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

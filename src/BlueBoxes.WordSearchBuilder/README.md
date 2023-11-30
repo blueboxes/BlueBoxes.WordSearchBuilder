@@ -1,15 +1,15 @@
 # About
-This package allow you to build, solve and export word search puzzles in the iPuz json format.
+This package allow you to build, solve and export wordsearch puzzles in the iPuz json format.
 
-Words can be placed at random horizontally, vertically or diagonally, forwards or backwards. The word search can be any size, and the words to be found can be of any length.
+Words are be placed at random horizontally, vertically or diagonally both forwards and backwards. The wordsearch can be any size, and the words to be found can be of any length.
 
 # How to Use
-The builder allows you to add words to a grid, upon calling `Build` it fills the spaces with random letters.
+The wordsearch builder allows adding words to the wordsearch grid, upon calling `Build` it fills the spaces with random letters.
 
 ```csharp
-var builder = new WordSearchBuilder(10, 10);    
-builder.AddWords("Apple", "Orange", "Grape");
-var puzzleDef = builder.Build();
+var puzzleDef = new WordSearchBuilder(10, 10)
+    .AddWords("Apple", "Orange", "Grape")
+    .Build();
 ```
 
 To render the results you can loop over the grid.

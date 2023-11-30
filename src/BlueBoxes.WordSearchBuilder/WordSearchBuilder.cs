@@ -27,16 +27,6 @@ public class WordSearchBuilder
     public ISpaceFiller SpaceFiller { get; private set; } = new DefaultEnglishSpaceFiller();
 
     /// <summary>
-    /// Puzzle Difficulty Levels
-    /// </summary>
-    public enum Difficulty
-    {
-        Easy,
-        Medium,
-        Hard
-    }
-
-    /// <summary>
     /// Create a new WordSearchBuilder with a default set of Medium Difficulty WordPlacers
     /// </summary>
     /// <param name="width">Grid Width</param>

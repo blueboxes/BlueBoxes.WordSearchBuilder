@@ -58,15 +58,15 @@ namespace BlueBoxes.WordSearchBuilder.WordPlacers
                                                 new Reversed(new East()),
                                                 };
 
-        internal static List<WordPlacer> GetSet(WordSearchBuilder.Difficulty complexityLevel)
+        internal static List<WordPlacer> GetSet(Difficulty complexityLevel)
         {
             switch (complexityLevel)
             {
-                case WordSearchBuilder.Difficulty.Easy:
+                case Difficulty.Easy:
                     return PlacersEasy;
-                case WordSearchBuilder.Difficulty.Medium:
+                case Difficulty.Medium:
                     return PlacersMedium;
-                case WordSearchBuilder.Difficulty.Hard:
+                case Difficulty.Hard:
                     return PlacersHard;
                 default:
                     return PlacersHard;
