@@ -7,11 +7,11 @@ Words are be placed at random horizontally, vertically or diagonally both forwar
 Snaking Word Search puzzles where the words can change direction are not supported directly however could easily be added.
 
 ## Getting started
-The wordsearch builder allows adding words to the wordsearch grid, upon calling `Build` it fills the spaces with random letters.
+The WordSearch builder allows adding words to the WordSearch grid, upon calling `Build` it fills the spaces with random letters.
 
 ```csharp
 var builder = new WordSearchBuilder(10, 10)
-    .AddWords("Apple", "Orange", "Grape")
+    .WithWords("Apple", "Orange", "Grape")
     .Build();
 ```
 
@@ -60,7 +60,7 @@ We can use the library to solve a puzzle. This can be used to remove unwanted wo
 
 ```csharp
 var puzzleDef = new WordSearchBuilder(10, 10)
-            .AddWords("word1", "word2", "word3")
+            .WithWords("word1", "word2", "word3")
             .Build();
 
 var solver = new StandardWordSearchSolver();
@@ -68,8 +68,18 @@ var result = solver.SeekWord(puzzleDef.Puzzle, "word");
 
 ```
 
-### Removing Bad Words
-Example Coming Soon...
+### Excluding Bad Words
+The default space filler will populate the grid with random letters weighted by usage. This can result in words being created that are could be offensive or not desired. To prevent this you can use the clean space filler. This takes a list of words that you do not want to appear in the puzzle.
+
+```csharp
+var puzzleDef = new WordSearchBuilder(10, 10)
+    .WithWords("word1", "word2", "word3")
+    .WithSpaceFiller(new CleanEnglishSpaceFiller(new List<string> { "badword1", "badword2" }))
+    .Build();
+
+```
+
+A list of list of dirty, naughty, obscene and otherwise bad words you may want to exclude could be found [here](https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words).
 
 ### Saving and Loading a word search
 You can save and load a word search by serializing the Puzzle Definition. To ensure it is formatted correctly for the iPuz format converters are provided. 

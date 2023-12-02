@@ -58,9 +58,9 @@ public class NewModel : PageModel
         GridSize = puzzleLayout.GridSize;
 
         PuzzleDef = new WordSearchBuilder(GridSize, GridSize)
-            .SetDifficulty(GridLevel)
-            .SetTitle(PuzzleTitle)
-            .AddWords(words.Skip(1).ToArray())
+            .WithDifficulty(GridLevel)
+            .WithTitle(PuzzleTitle)
+            .WithWords(words.Skip(1).ToArray())
             .Build();
 
         var puzzleId = Guid.NewGuid();

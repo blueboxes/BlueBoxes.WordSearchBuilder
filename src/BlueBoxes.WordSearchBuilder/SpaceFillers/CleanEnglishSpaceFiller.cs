@@ -61,6 +61,4 @@ public class CleanEnglishSpaceFiller : DefaultEnglishSpaceFiller
         }
         return newLetter;
     }
-
-
 }

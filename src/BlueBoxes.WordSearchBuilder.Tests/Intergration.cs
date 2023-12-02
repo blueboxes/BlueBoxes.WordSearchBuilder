@@ -11,7 +11,7 @@ namespace BlueBoxes.WordSearchBuilder.Tests
         public async Task SaveAndLoad()
         {
             var ws = new WordSearchBuilder(10, 10);
-            ws.AddWords("word1", "word2", "word3");
+            ws.WithWords("word1", "word2", "word3");
 
             var pd = ws.Build();
              
@@ -27,7 +27,7 @@ namespace BlueBoxes.WordSearchBuilder.Tests
         public void CreateValidSolutions()
         {
             var ws = new WordSearchBuilder(100, 100);
-            ws.AddWords("word1", "word2", "word3");
+            ws.WithWords("word1", "word2", "word3");
 
             var pd = ws.Build();
 
@@ -46,7 +46,7 @@ namespace BlueBoxes.WordSearchBuilder.Tests
         public void CreateAndSolve()
         {
             var pd = new WordSearchBuilder(10, 10)
-            .AddWords("word1", "word2", "word3")
+            .WithWords("word1", "word2", "word3")
             .Build();
 
             var sol = new StandardWordSearchSolver();

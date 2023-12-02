@@ -15,7 +15,7 @@ while(true)
     if(String.IsNullOrEmpty(newWord))
         break;
     
-    builder.AddWords(newWord);
+    builder.WithWords(newWord);
 }
 
 var puzzleDef = builder.Build();

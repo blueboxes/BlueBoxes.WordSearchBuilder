@@ -8,7 +8,7 @@ The wordsearch builder allows adding words to the wordsearch grid, upon calling 
 
 ```csharp
 var puzzleDef = new WordSearchBuilder(10, 10)
-    .AddWords("Apple", "Orange", "Grape")
+    .WithWords("Apple", "Orange", "Grape")
     .Build();
 ```
 

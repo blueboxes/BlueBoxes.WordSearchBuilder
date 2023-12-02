@@ -41,7 +41,7 @@ public class WordSearchBuilder
     /// </summary>
     /// <param name="difficulty">Difficulty Level</param>
     /// <returns>Current WordSearchBuilder</returns>
-    public WordSearchBuilder SetDifficulty(Difficulty difficulty)
+    public WordSearchBuilder WithDifficulty(Difficulty difficulty)
     {
         WordPlacers = PlacerSets.GetSet(difficulty);
         return this;
@@ -53,7 +53,7 @@ public class WordSearchBuilder
     /// <param name="title">Title</param>
     /// <returns>Current WordSearchBuilder</returns>
 
-    public WordSearchBuilder SetTitle(string title)
+    public WordSearchBuilder WithTitle(string title)
     {
         Title = title;
         return this;
@@ -65,7 +65,7 @@ public class WordSearchBuilder
     /// </summary>
     /// <param name="spaceFiller">SpaceFiller</param>
     /// <returns>Current WordSearchBuilder</returns>
-    public WordSearchBuilder SetSpaceFiller(ISpaceFiller spaceFiller)
+    public WordSearchBuilder WithSpaceFiller(ISpaceFiller spaceFiller)
     {
         SpaceFiller = spaceFiller;
         return this;
@@ -76,7 +76,7 @@ public class WordSearchBuilder
     /// </summary>
     /// <param name="wordPlacers">Set of Word Placers to use</param>
     /// <returns>Current WordSearchBuilder</returns>
-    public WordSearchBuilder SetWordPlacers(IEnumerable<WordPlacer> wordPlacers)
+    public WordSearchBuilder WithWordPlacers(IEnumerable<WordPlacer> wordPlacers)
     {
         WordPlacers.AddRange(wordPlacers);
         return this;
@@ -87,7 +87,7 @@ public class WordSearchBuilder
     /// </summary>
     /// <param name="words">List of words to add</param>
     /// <returns>Current WordSearchBuilder</returns>
-    public WordSearchBuilder AddWords(params string[] words)
+    public WordSearchBuilder WithWords(params string[] words)
     {
         foreach (var currentWord in words.SortByComplexity())
         {
@@ -125,7 +125,7 @@ public class WordSearchBuilder
             Difficulty = DifficultyLevel.ToString(),
             Solution = Solution,
             Copyright = DateTime.Now.Year.ToString(),
-            Publisher = "Bluebox Puzzles",
+            Publisher = "BlueBox Puzzles",
             Puzzle = Grid
         };
 
