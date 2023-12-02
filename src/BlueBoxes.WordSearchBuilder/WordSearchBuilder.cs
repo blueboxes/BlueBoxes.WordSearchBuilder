@@ -21,20 +21,9 @@ public class WordSearchBuilder
     public string? Notes { get; set; }
     public string Title { get; private set; } = "";
 
-
     private List<WordPlacer> WordPlacers { get; set; }
 
     public ISpaceFiller SpaceFiller { get; private set; } = new DefaultEnglishSpaceFiller();
-
-    /// <summary>
-    /// Puzzle Difficulty Levels
-    /// </summary>
-    public enum Difficulty
-    {
-        Easy,
-        Medium,
-        Hard
-    }
 
     /// <summary>
     /// Create a new WordSearchBuilder with a default set of Medium Difficulty WordPlacers
@@ -59,11 +48,23 @@ public class WordSearchBuilder
     }
 
     /// <summary>
+    /// Sets the Title of the WordSearch Puzzle
+    /// </summary>
+    /// <param name="title">Title</param>
+    /// <returns>Current WordSearchBuilder</returns>
+
+    public WordSearchBuilder SetTitle(string title)
+    {
+        Title = title;
+        return this;
+    }
+     
+
+    /// <summary>
     /// Sets the SpaceFiller of the WordSearchBuilder
     /// </summary>
     /// <param name="spaceFiller">SpaceFiller</param>
     /// <returns>Current WordSearchBuilder</returns>
-
     public WordSearchBuilder SetSpaceFiller(ISpaceFiller spaceFiller)
     {
         SpaceFiller = spaceFiller;

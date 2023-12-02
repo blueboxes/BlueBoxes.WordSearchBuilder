@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlueBoxes.WordSearchBuilder.WebSample", "BlueBoxes.WordSearchBuilder.WebSample.csproj", "{6A0D79D4-8CCB-43A0-8020-5009E309A23E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A0D79D4-8CCB-43A0-8020-5009E309A23E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A0D79D4-8CCB-43A0-8020-5009E309A23E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A0D79D4-8CCB-43A0-8020-5009E309A23E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A0D79D4-8CCB-43A0-8020-5009E309A23E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F11CD4D-7F96-44E0-BF67-0ED623229381}
+	EndGlobalSection
+EndGlobal
