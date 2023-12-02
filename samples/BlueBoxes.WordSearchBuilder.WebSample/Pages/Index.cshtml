@@ -1,57 +1,52 @@
 ﻿@page
-@using static WordSearchEngine.WordSearchBuilder;
-@model IndexModel
+@using BlueBoxes.WordSearchBuilder.Models
+@model NewModel
 
 @{
-    if (Model is null)
-        throw new ArgumentNullException(nameof(Model));
+if (Model is null)
+  throw new ArgumentNullException(nameof(Model));
 }
-
-<style>
-table{
-        text-align: left;
-        margin-top: 50px;
-        width: 100%;
-}
-
-    thead {
-        background-color: rgb(249 250 251 / var(--tw-bg-opacity));
-    }
-</style>
 
 <div class="relative flex min-h-screen flex-col bg-gray-50 py-6 sm:py-12 max-w-none px-20">
     <div class="relative bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5  sm:rounded-lg sm:px-10">
 
-        <a href="/new" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">New Puzzle Set</a>
+        <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="set-title">Title</label>
+                <input id="set-title" name="PuzzleTitle" value="@Model.PuzzleTitle"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="grid-level">Difficulty</label>
+                <select asp-for="@Model.GridLevel"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    asp-items="Html.GetEnumSelectList<Difficulty>()">
+                </select>
+            </div>
 
-        <table class="table-auto">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Difficulty</th>
-                    <th>Style</th>
-                    <th>Duplicate</th>
-                    <th>Web</th>
-                    <th>PDF Puzzle</th>
-                    <th>PDF Soultion</th>
-                    <th>Cover Sheet</th> 
-                </tr>
-            </thead>
-            <tbody>
-            @foreach(var puzzle in Model.Puzzles){
-                <tr>
-                    <td>@puzzle.Title</td>
-                    <td>Difficulty</td>
-                    <td>Style</td>
-                    <td><a href="/new/?id=@puzzle.Id">Duplicate</a></td>
-                    <td><a href="/web/?id=@puzzle.Id">Web</a> </td>
-                    <td><a href="/save/pdf/@(puzzle.Id)/Puzzles">PDF Puzzles</a> </td>
-                    <td><a href="/save/pdf/@(puzzle.Id)/Solutions">PDF Solutions</a> </td>
-                    <td><a href="/save/cover/@puzzle.Id">Cover</a> </td>
-                </tr>
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="grid-level">Words</label>
+                <textarea asp-for="@Model.InputWords" rows="10" cols="200"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </textarea>
+            </div>
+            <input type="submit"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                value="Generate">
+
+            @if (!string.IsNullOrEmpty(Model.Id))
+            {
+                <a href="/web/?id=@Model.Id"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Web</a>
+                <a href="/save/pdf/@Model.Id"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    PDF
+                    Puzzles
+                </a>     
             }
-            </tbody>
-        </table>
+
+        </form>
+
 
     </div>
 
@@ -68,5 +63,8 @@ table{
         }
     </style>
 
-</div>
 
+
+  
+
+</div>

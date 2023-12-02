@@ -1,39 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using WordSearchEngine.Models;
-using BlueBoxes.WordSearchBuilder;
-using static BlueBoxes.WordSearchBuilder;
+﻿using BlueBoxes.WordSearchBuilder.Models;
+using BlueBoxes.WordSearchBuilder.Repositories;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BlueBoxes.WordSearchBuilder.WebSample.Pages;
 
 public class WebModel : PageModel
 {
     public string SetTitle { get; set; } = "";
-    public string InputWords { get; set; } = "";
     public Difficulty GridLevel { get; set; } = Difficulty.Easy;
-
-    public Display View { get; set; } = Display.All;
-    public IList<PuzzleDefinition> Puzzles { get; set; } = new List<PuzzleDefinition>();
+    public PuzzleDefinition? PuzzleDef { get; set; }
     public PuzzleLayout PuzzleLayout { get; set; } = new EasyPuzzleLayout();
-
-    public enum Display
-    {
-        All,
-        Puzzles,
-        Solutions
-    }
-
-    public async Task OnGet(string? id, Display view = Display.All)
+  
+    public async Task OnGet(string? id)
     {
         if (id != null)
         {
-            var repository = new WordSearchEngine.WordSearchRepository();
-            var puzzleSet = await repository.LoadSetAsync(id);
-            Puzzles = puzzleSet.Puzzles;
-            InputWords = string.Join(Environment.NewLine, puzzleSet.Puzzles.Select(a => $"{a.Title},{string.Join(",", a.Solution.Select(b => b.Word))}"));
-            GridLevel = Enum.TryParse(puzzleSet.Puzzles.FirstOrDefault()?.Difficulty, out Difficulty difficulty) ? difficulty : Difficulty.Easy;
-            SetTitle = puzzleSet.Title ?? string.Empty;
-            View = view;
-
+            var repository = new LocalFileRepository();
+            PuzzleDef = await repository.LoadPuzzleAsync(Path.Join(Path.GetTempPath(), $"{id}.json"));
+            //InputWords = Puzzle.Solution(a => $"{a.Title},{string.Join(",", a.Solution.Select(b => b.Word))}");
+            GridLevel = Enum.TryParse(PuzzleDef.Difficulty, out Difficulty difficulty) ? difficulty : Difficulty.Easy;
+            SetTitle = PuzzleDef.Title ?? string.Empty;
+            
             switch (GridLevel)
             {
                 case Difficulty.Medium:

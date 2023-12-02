@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BlueBoxes.WordSearchBuilder" Version="1.0.0-Preview" />
+    <PackageReference Include="BlueBoxes.WordSearchBuilder" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

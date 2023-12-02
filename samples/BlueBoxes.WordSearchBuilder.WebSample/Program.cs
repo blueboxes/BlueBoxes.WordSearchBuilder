@@ -1,3 +1,4 @@
+using BlueBoxes.WordSearchBuilder.WebSample;
 using Microsoft.AspNetCore.Mvc;
 using PuppeteerSharp;
 using System.Runtime.InteropServices;
@@ -26,7 +27,7 @@ builder.Services.AddSingleton(new PdfRenderer(info));
 var app = builder.Build();
 
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-app.MapGet("/save/pdf/{id}/{view}", async ([FromServices] PdfRenderer renderer, string id, Display view) => await renderer?.Save(id, view));
+app.MapGet("/save/pdf/{id}", async ([FromServices] PdfRenderer renderer, string id) => await renderer?.Save(id));
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
 app.UseHttpsRedirection();

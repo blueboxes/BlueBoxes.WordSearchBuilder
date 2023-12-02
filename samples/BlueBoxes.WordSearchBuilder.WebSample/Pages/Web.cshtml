@@ -1,6 +1,5 @@
 ﻿@page
-@using WordSearchEngine.Models;
-@using WordSearchEngine.WordPlacers;
+@using BlueBoxes.WordSearchBuilder.Models
 @model WebModel
 
 @{
@@ -181,77 +180,61 @@
     }
 </style>
 
-@if (Model.View == WebModel.Display.Puzzles || Model.View == WebModel.Display.All)
-{
+  
 
-@foreach (var puzzle in Model.Puzzles)
-{
-
-    <h2>@puzzle.Title</h2>
+    <h2>@Model.PuzzleDef.Title</h2>
 
     <div class="wordsearch">
 
-            <div class="grid-container" style="grid-template-columns: repeat(@puzzle.Dimensions.Width, 1fr);">
-            @{       
-                for (var row = 0; row < puzzle.Dimensions.Height; row++)
+    <div class="grid-container" style="grid-template-columns: repeat(@Model.PuzzleDef.Dimensions.Width, 1fr);">
+            @{
+            for (var row = 0; row < Model.PuzzleDef.Dimensions.Height; row++)
                 {
-                for (var col = 0; col < puzzle.Dimensions.Width; col++)
+                for (var col = 0; col < Model.PuzzleDef.Dimensions.Width; col++)
                     {
-                            <div class="grid-item" data-id="@col,@row">@(puzzle.Puzzle[col][row])</div>
+                    <div class="grid-item" data-id="@col,@row">@(Model.PuzzleDef.Puzzle[col][row])</div>
                     }
                 }
             }
         </div>
     </div>
 
-        <div class="words-container" style="max-width: @(puzzle.Dimensions.Width * Model?.PuzzleLayout.PuzzleCellSize)px;">
-        @foreach (var word in puzzle.Solution ?? new List<PlacedWord>())
+<div class="words-container" style="max-width: @(Model.PuzzleDef.Dimensions.Width * Model?.PuzzleLayout.PuzzleCellSize)px;">
+    @foreach (var word in Model.PuzzleDef.Solution ?? new List<PlacedWord>())
         {
             <div class="words-item">⬜ @word.Word</div>
         }
     </div>
     <footer></footer>
     <div class="break"></div>
-}
 
-}
-
-@if (Model.View == WebModel.Display.Solutions || Model.View == WebModel.Display.All){
-
-<h2>Solutions</h2>
+<h2>Solution</h2>
 <div class="answer-container">
-    @foreach (var puzzle in Model.Puzzles)
-    {
-        <div class="answer-item">
+    <div class="answer-item">
+        <div>
+        <h4>@Model.PuzzleDef.Title</h4>
+            <div class="wordsearch">
+            <div class="grid-container" style="grid-template-columns: repeat(@Model.PuzzleDef.Dimensions.Width, 1fr);">
 
-            <div>
-                <h4>@puzzle.Title</h4>
-                <div class="wordsearch">
+                @foreach (var word in Model.PuzzleDef.Solution ?? new List<PlacedWord>())
+                    {
+                            <div class="ring ring-@word.Direction.ToString().ToLower()" data-word="@word" style="top:@(word.StartCell.Row * Model?.PuzzleLayout.SolutionCellSize)px;
+                                left:@(word.StartCell.Col * Model?.PuzzleLayout.SolutionCellSize)px;
+                                height:@(GetHeight(word.Direction, Model?.PuzzleLayout.SolutionCellSize??1, word.GridWordLength))px;
+                                width:@(GetWidth(word.Direction,  Model?.PuzzleLayout.SolutionCellSize??1, word.GridWordLength))px"></div>
+                    }
 
-                        <div class="grid-container" style="grid-template-columns: repeat(@puzzle.Dimensions.Width, 1fr);">
-
-                        @foreach (var word in puzzle.Solution ?? new List<PlacedWord>())
-                        {
-                                <div class="ring ring-@word.Direction.ToString().ToLower()" data-word="@word" style="top:@(word.StartCell.Row * Model?.PuzzleLayout.SolutionCellSize)px;
-                                    left:@(word.StartCell.Col * Model?.PuzzleLayout.SolutionCellSize)px;
-                                    height:@(GetHeight(word.Direction, Model?.PuzzleLayout.SolutionCellSize??1, word.GridWordLength))px;
-                                    width:@(GetWidth(word.Direction,  Model?.PuzzleLayout.SolutionCellSize??1, word.GridWordLength))px"></div>
-                        }
-
-                        @{
-                                for (var row = 0; row < puzzle.Dimensions.Height; row++)
+                    @{
+                    for (var row = 0; row < Model.PuzzleDef.Dimensions.Height; row++)
+                            {
+                        for (var col = 0; col < Model.PuzzleDef.Dimensions.Width; col++)
                                 {
-                                    for (var col = 0; col < puzzle.Dimensions.Width; col++)
-                                    {
-                                        <div class="grid-item" data-id="@col,@row">@(puzzle.Puzzle[col][row])</div>
-                                }
+                            <div class="grid-item" data-id="@col,@row">@(Model.PuzzleDef.Puzzle[col][row])</div>
                             }
                         }
-                    </div>
+                    }
                 </div>
             </div>
         </div>
-    }
+    </div>
 </div>
-
-}

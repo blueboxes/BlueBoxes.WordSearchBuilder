@@ -1,8 +1,7 @@
-using PdfSharpCore.Pdf;
+using BlueBoxes.WordSearchBuilder.Repositories;
 using PdfSharpCore.Pdf.IO;
 using PuppeteerSharp;
 using PuppeteerSharp.Media;
-using System.Xml.Linq;
 
 namespace BlueBoxes.WordSearchBuilder.WebSample;
 
@@ -15,10 +14,10 @@ public class PdfRenderer
 
     public PdfRenderer(AppInfo browserInfo)
     {
-        this.appInfo = browserInfo;
+        appInfo = browserInfo;
     }
 
-    public async Task<IResult> Save(string puzzleSetId, Pages.WebModel.Display view)
+    public async Task<IResult> Save(string puzzleId)
     {
         var browser = await Puppeteer.LaunchAsync(new LaunchOptions
         {
@@ -26,7 +25,7 @@ public class PdfRenderer
             ExecutablePath = appInfo.BrowserExecutablePath
         });
         var page = await browser.NewPageAsync();
-        await page.GoToAsync($"https://localhost:7028/web/?id={puzzleSetId}&view={view}"); //todo: configure domain
+        await page.GoToAsync($"http://localhost:5017/web/?id={puzzleId}"); //todo: configure domain
 
         var pdfOptions = new PdfOptions
         {
@@ -46,13 +45,13 @@ public class PdfRenderer
         var stream = await page.PdfStreamAsync(pdfOptions);
         await browser.CloseAsync();
 
-        var repository = new WordSearchEngine.WordSearchRepository();
-        var puzzleSet = await repository.LoadSetAsync(puzzleSetId);
+        var repository = new LocalFileRepository();
+        var puzzle = await repository.LoadPuzzleAsync(Path.Join(Path.GetTempPath(), $"{puzzleId}.json"));
         var document = PdfReader.Open(stream, PdfDocumentOpenMode.Modify);
         document.Info.Author = "Bluebox Sample";
         document.Info.Creator = "BlueBoxes Sample";
-        document.Info.Title = $"{puzzleSet.Title}";
-        document.Info.Keywords = string.Join(";", puzzleSet.Puzzles.Select(a => a.Title));
+        document.Info.Title = $"{puzzle.Title}";
+        document.Info.Keywords = string.Join(";", puzzle.Title);
 
         var outputStream = new MemoryStream();
         document.Save(outputStream, false);

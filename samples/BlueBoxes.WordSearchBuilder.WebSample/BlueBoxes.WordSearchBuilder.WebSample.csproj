@@ -7,7 +7,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="BlueBoxes.WordSearchBuilder" Version="1.0.0-Preview3" />
+    <PackageReference Include="BlueBoxes.WordSearchBuilder" Version="1.0.0" />
     <PackageReference Include="PdfSharpCore" Version="1.3.56" />
     <PackageReference Include="PuppeteerSharp" Version="9.1.0" />
   </ItemGroup>
